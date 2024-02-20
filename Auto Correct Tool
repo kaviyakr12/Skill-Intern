@@ -1,0 +1,37 @@
+from textblob import TextBlob
+from tkinter import *
+
+def Auto_Correct():
+    corrected_words = []
+    text = Input_text.get("1.0", "end-1c").split(" ")
+    for i in text:
+        corrected_words.append(TextBlob(i).correct())
+    output_text.delete(1.0, END)
+    for i in corrected_words:
+        output_text.insert(END, str(i) + " ")
+
+mainwin = Tk()
+mainwin.geometry("1400x520")
+mainwin.resizable(False, False)
+mainwin.title("Auto Correct")
+mainwin.config(bg="pale green")
+
+Label(mainwin, text="Enter text", font=("arial", 16, "bold"), bg= "white").place(x=250, y=90)
+Input_text = Text(mainwin, font="arial 16", bg="white", height=10, wrap=WORD, padx=5, pady=5, width=50, insertbackground="black")
+Input_text.place(x=30, y=130)
+
+auto_correct_btn = Button(mainwin, text="Correct", bg="pink", width=40, font="arial 16 bold", pady=3, command=Auto_Correct)
+auto_correct_btn.place(x=320, y=440)
+
+Label(mainwin, text="Output text", font=("arial", 16, "bold"), bg="white").place(x=850, y=90)
+output_text = Text(mainwin, font="arial 16", bg="white", height=10, wrap=WORD, padx=5, pady=5, width=50, insertbackground="black")
+output_text.place(x=600, y=130)  # Adjusted placement coordinates for output_text
+
+def clear():
+    Input_text.delete(1.0, END)
+    output_text.delete(1.0, END)
+
+cl = Button(mainwin, text="Clear", width=10, bg="pink", font="arial 16 bold", command=clear)
+cl.place(x=1110, y=440)
+
+mainwin.mainloop()
